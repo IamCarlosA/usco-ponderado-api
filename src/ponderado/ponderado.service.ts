@@ -14,9 +14,10 @@ export class PonderadoService {
     private ponderadoModel: Model<PonderadoDocument>,
   ) {}
   async generate(generatePonderadoDto: GeneratePonderadoDto) {
-    const allPonderados = [];
+    const allPonderados = {};
     const porcentajes = await this.findAll();
-    porcentajes.map((pond) => {
+
+    porcentajes.forEach((pond) => {
       // TODO: CAMBIAR FORMULA
       const ponderado =
         pond.socialesYCiudadanas +
@@ -29,11 +30,15 @@ export class PonderadoService {
         generatePonderadoDto.lecturaCritica +
         generatePonderadoDto.matematicas +
         generatePonderadoDto.socialesYCiudadanas;
-      return allPonderados.push({
+      if (!allPonderados.hasOwnProperty(pond.career.faculty.title)) {
+        allPonderados[pond.career.faculty.title] = [];
+      }
+      allPonderados[pond.career.faculty.title].push({
         career: pond.career,
         ponderado,
       });
     });
+
     return allPonderados;
   }
   async create(createPonderadoDto: CreatePonderadoDto) {
