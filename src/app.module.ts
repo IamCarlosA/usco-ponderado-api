@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { FacultyModule } from './faculty/faculty.module';
 import { CareerModule } from './career/career.module';
 import { PonderadoModule } from './ponderado/ponderado.module';
+import { PeriodModule } from './period/period.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { PonderadoModule } from './ponderado/ponderado.module';
     FacultyModule,
     CareerModule,
     PonderadoModule,
+    PeriodModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -5,7 +5,6 @@ import { CreatePonderadoDto } from './dto/create-ponderado.dto';
 import { UpdatePonderadoDto } from './dto/update-ponderado.dto';
 import { Model, Types } from 'mongoose';
 import { DataAlreadyExistsException } from 'src/shared/exceptions/data-already-exists.exception';
-import { GeneratePonderadoDto } from './dto/generate-ponderado.dto';
 import { PonderadoByFaculty } from './entities/ponderado.interface';
 
 @Injectable()
@@ -15,59 +14,6 @@ export class PonderadoService {
     private ponderadoModel: Model<PonderadoDocument>,
   ) {}
 
-  private GeneratePorcentajes(pon: number, course: number): number {
-    return this.convertPorcentaje(pon) * course;
-  }
-
-  private convertPorcentaje(num: number): number {
-    return num * 0.01;
-  }
-
-  async generate(generatePonderadoDto: GeneratePonderadoDto) {
-    const {
-      cienciasNaturales,
-      ingles,
-      lecturaCritica,
-      matematicas,
-      socialesYCiudadanas,
-    } = generatePonderadoDto;
-    const allPonderados: PonderadoByFaculty[] = [];
-    const porcentajes = await this.findAll();
-
-    porcentajes.map((pond) => {
-      const ponderado =
-        this.GeneratePorcentajes(
-          pond.socialesYCiudadanas,
-          socialesYCiudadanas,
-        ) +
-        this.GeneratePorcentajes(pond.matematicas, matematicas) +
-        this.GeneratePorcentajes(pond.ingles, ingles) +
-        this.GeneratePorcentajes(pond.lecturaCritica, lecturaCritica) +
-        this.GeneratePorcentajes(pond.cienciasNaturales, cienciasNaturales);
-
-      const index = allPonderados.findIndex(
-        (search) => search.faculty === pond.career.faculty.title,
-      );
-      if (index !== -1) {
-        allPonderados[index].ponderados.push({
-          ponderado,
-          career: pond.career,
-        });
-      } else {
-        allPonderados.push({
-          faculty: pond.career.faculty.title,
-          ponderados: [
-            {
-              ponderado,
-              career: pond.career,
-            },
-          ],
-        });
-      }
-    });
-
-    return allPonderados;
-  }
   async create(createPonderadoDto: CreatePonderadoDto) {
     if (typeof createPonderadoDto.career === 'string') {
       if (!Types.ObjectId.isValid(createPonderadoDto.career)) {

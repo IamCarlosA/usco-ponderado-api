@@ -11,16 +11,10 @@ import { PonderadoService } from './ponderado.service';
 import { CreatePonderadoDto } from './dto/create-ponderado.dto';
 import { UpdatePonderadoDto } from './dto/update-ponderado.dto';
 import { ValidateObjectId } from 'src/shared/pipes/validate-object-id.pipes';
-import { GeneratePonderadoDto } from './dto/generate-ponderado.dto';
 
 @Controller('ponderado')
 export class PonderadoController {
   constructor(private readonly ponderadoService: PonderadoService) {}
-
-  @Post('/generate')
-  generate(@Body() generatePonderadoDto: GeneratePonderadoDto) {
-    return this.ponderadoService.generate(generatePonderadoDto);
-  }
 
   @Post()
   create(@Body() createPonderadoDto: CreatePonderadoDto) {

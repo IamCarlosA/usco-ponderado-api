@@ -1,12 +1,14 @@
 import {
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsPositive,
   IsString,
   Max,
   Min,
 } from 'class-validator';
 import { Types } from 'mongoose';
+import { PeriodsOfCareer } from '../entities/ponderado.interface';
 
 export class CreatePonderadoDto {
   @IsNumber()
@@ -37,4 +39,6 @@ export class CreatePonderadoDto {
   @IsNotEmpty()
   @IsString()
   career: string | Types.ObjectId;
+  @IsOptional()
+  periods?: PeriodsOfCareer[];
 }

@@ -1,6 +1,8 @@
 import { Career } from './../../career/entities/career.entity';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
+import { Period } from 'src/period/entities/period.entity';
+import { PeriodsOfCareer } from './ponderado.interface';
 
 @Schema({ timestamps: true })
 export class Ponderado {
@@ -16,6 +18,12 @@ export class Ponderado {
   socialesYCiudadanas: number;
   @Prop({ index: { required: true }, type: Types.ObjectId, ref: () => Career })
   career: Career;
+  @Prop({
+    required: true,
+    type: Array,
+    default: [],
+  })
+  periods: PeriodsOfCareer[];
 }
 
 export type PonderadoDocument = Ponderado & Document;

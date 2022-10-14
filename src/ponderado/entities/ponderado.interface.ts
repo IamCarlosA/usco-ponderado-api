@@ -1,3 +1,5 @@
+import { Period } from 'src/period/entities/period.entity';
+
 export interface Faculty {
   title: string;
   description: string;
@@ -24,4 +26,9 @@ export interface Ponderado {
 export interface PonderadoByFaculty {
   faculty: string;
   ponderados: Ponderado[];
+}
+
+export interface PeriodsOfCareer {
+  period: Period;
+  value: number;
 }
