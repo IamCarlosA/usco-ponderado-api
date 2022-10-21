@@ -41,4 +41,14 @@ export class CreatePonderadoDto {
   career: string | Types.ObjectId;
   @IsOptional()
   periods?: PeriodsOfCareer[];
+  @IsNumber()
+  @Min(0)
+  @Max(100)
+  @IsNotEmpty()
+  cierre1: number;
+  @IsNumber()
+  @Min(0)
+  @Max(100)
+  @IsNotEmpty()
+  cierre2: number;
 }

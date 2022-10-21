@@ -24,6 +24,10 @@ export class Ponderado {
     default: [],
   })
   periods: PeriodsOfCareer[];
+  @Prop({ required: true })
+  cierre1: number;
+  @Prop({ required: true })
+  cierre2: number;
 }
 
 export type PonderadoDocument = Ponderado & Document;
